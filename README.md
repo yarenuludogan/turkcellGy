@@ -12,7 +12,7 @@ Bu işlem birkaç adımdan oluşur:
 
 **Http Metot ve İşlevleri**
 
-HTTP sunucuya yapılacak olan isteğin tipini belirlemek için sekiz farklı method kullanır (HTTP Methods). Bu metotlara aynı zamanda HTTP Fiilleri de denir (HTTP Verbs).
+HTTP sunucuya yapılacak olan isteğin tipini belirlemek için sekiz farklı method kullanır. Bu metotlara aynı zamanda HTTP Verbs de denir.
 
 Genel Metotlar aşağıdaki gibidir.
 
