@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/categories")
 public class CategoriesController {
@@ -41,12 +43,12 @@ public class CategoriesController {
     }
     
     @PutMapping("/{id}")
-    public UpdatedCategoryResponse update(@PathVariable UUID id, @RequestBody UpdateCategoryRequest updateCategoryRequest) {
+    public UpdatedCategoryResponse update(@PathVariable UUID id, @RequestBody @Valid UpdateCategoryRequest updateCategoryRequest) {
         return categoryServiceImpl.update(id, updateCategoryRequest);
     }
 
     @PostMapping()
-        public CreatedCategoryResponse create(@RequestBody CreateCategoryRequest createCategoryRequest)
+        public CreatedCategoryResponse create(@RequestBody @Valid CreateCategoryRequest createCategoryRequest)
         {
         return categoryServiceImpl.create(createCategoryRequest);
     }

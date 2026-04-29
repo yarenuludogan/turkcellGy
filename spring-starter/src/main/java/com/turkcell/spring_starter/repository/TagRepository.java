@@ -1,5 +1,6 @@
 package com.turkcell.spring_starter.repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,4 +11,5 @@ import com.turkcell.spring_starter.entity.Tag;
 @Repository
 public interface TagRepository extends JpaRepository<Tag, UUID>
 { 
+    Optional<Tag> findByName(String name);
 }

@@ -13,6 +13,8 @@ import com.turkcell.spring_starter.dto.response.GetCategoryResponse;
 import com.turkcell.spring_starter.dto.request.UpdateCategoryRequest;
 import com.turkcell.spring_starter.dto.response.UpdatedCategoryResponse;
 import com.turkcell.spring_starter.entity.Category;
+import com.turkcell.spring_starter.exception.EntityAlreadyExistsException;
+import com.turkcell.spring_starter.exception.EntityNotFoundException;
 import com.turkcell.spring_starter.repository.CategoryRepository;
 
 @Service
@@ -24,7 +26,10 @@ public class CategoryServiceImpl {
     }
 
     public CreatedCategoryResponse create(CreateCategoryRequest createCategoryRequest) {
- 
+        if (categoryRepository.findByName(createCategoryRequest.getName()).isPresent()) {
+            throw new EntityAlreadyExistsException("Category with name '" + createCategoryRequest.getName() + "' already exists");
+        }
+
         Category category = new Category();
         category.setName(createCategoryRequest.getName());
         category = this.categoryRepository.save(category); 
@@ -51,7 +56,7 @@ public class CategoryServiceImpl {
 
     public GetCategoryResponse getById(UUID id) {
 
-        Category category = categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Category not found"));
+        Category category = categoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + id));
 
         GetCategoryResponse response = new GetCategoryResponse();
 
@@ -62,7 +67,14 @@ public class CategoryServiceImpl {
     }
 
     public UpdatedCategoryResponse update(UUID id, UpdateCategoryRequest updateCategoryRequest) {
-        Category category = categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Category not found"));
+        Category category = categoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + id));
+
+        // Check if another category with the same name exists
+        categoryRepository.findByName(updateCategoryRequest.getName()).ifPresent(existingCategory -> {
+            if (!existingCategory.getId().equals(id)) {
+                throw new EntityAlreadyExistsException("Category with name '" + updateCategoryRequest.getName() + "' already exists");
+            }
+        });
 
         category.setName(updateCategoryRequest.getName());
         category = categoryRepository.save(category);
@@ -76,7 +88,7 @@ public class CategoryServiceImpl {
     }
 
     public void delete(UUID id) {
-        Category category = categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Category not found"));
+        Category category = categoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + id));
         categoryRepository.delete(category);
     }
 }

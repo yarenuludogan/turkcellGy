@@ -14,6 +14,8 @@ import com.turkcell.spring_starter.dto.request.UpdateProductRequest;
 import com.turkcell.spring_starter.dto.response.UpdatedProductResponse;
 import com.turkcell.spring_starter.entity.Category;
 import com.turkcell.spring_starter.entity.Product;
+import com.turkcell.spring_starter.exception.EntityAlreadyExistsException;
+import com.turkcell.spring_starter.exception.EntityNotFoundException;
 import com.turkcell.spring_starter.repository.CategoryRepository;
 import com.turkcell.spring_starter.repository.ProductRepository;
 
@@ -28,7 +30,11 @@ public class ProductServiceImpl {
     }
 
     public CreatedProductResponse create(CreateProductRequest createProductRequest) {
-        Category category = categoryRepository.findById(createProductRequest.getCategoryId()).orElseThrow(() -> new RuntimeException("Category not found "));
+        Category category = categoryRepository.findById(createProductRequest.getCategoryId()).orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + createProductRequest.getCategoryId()));
+
+        if (productRepository.findByName(createProductRequest.getName()).isPresent()) {
+            throw new EntityAlreadyExistsException("Product with name '" + createProductRequest.getName() + "' already exists");
+        }
 
         Product product = new Product();
         product.setName(createProductRequest.getName());
@@ -60,7 +66,7 @@ public class ProductServiceImpl {
     }
 
     public GetProductResponse getById(UUID id) {
-        Product product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+        Product product = productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + id));
 
         GetProductResponse response = new GetProductResponse();
         response.setId(product.getId());
@@ -73,8 +79,15 @@ public class ProductServiceImpl {
     }
 
     public UpdatedProductResponse update(UUID id, UpdateProductRequest updateProductRequest) {
-        Product product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
-        Category category = categoryRepository.findById(updateProductRequest.getCategoryId()).orElseThrow(() -> new RuntimeException("Category not found"));
+        Product product = productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + id));
+        Category category = categoryRepository.findById(updateProductRequest.getCategoryId()).orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + updateProductRequest.getCategoryId()));
+
+        // Check if another product with the same name exists
+        productRepository.findByName(updateProductRequest.getName()).ifPresent(existingProduct -> {
+            if (!existingProduct.getId().equals(id)) {
+                throw new EntityAlreadyExistsException("Product with name '" + updateProductRequest.getName() + "' already exists");
+            }
+        });
 
         product.setName(updateProductRequest.getName());
         product.setDescription(updateProductRequest.getDescription());
@@ -92,7 +105,7 @@ public class ProductServiceImpl {
     }
 
     public void delete(UUID id) {
-        Product product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+        Product product = productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + id));
 
         productRepository.delete(product);
     }

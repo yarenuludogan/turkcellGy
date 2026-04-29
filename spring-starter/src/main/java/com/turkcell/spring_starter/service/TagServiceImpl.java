@@ -13,6 +13,8 @@ import com.turkcell.spring_starter.dto.response.ListTagResponse;
 import com.turkcell.spring_starter.dto.request.UpdateTagRequest;
 import com.turkcell.spring_starter.dto.response.UpdatedTagResponse;
 import com.turkcell.spring_starter.entity.Tag;
+import com.turkcell.spring_starter.exception.EntityAlreadyExistsException;
+import com.turkcell.spring_starter.exception.EntityNotFoundException;
 import com.turkcell.spring_starter.repository.TagRepository;
 
 @Service
@@ -24,6 +26,10 @@ public class TagServiceImpl {
     }
 
     public CreatedTagResponse create(CreateTagRequest createTagRequest) {
+        if (tagRepository.findByName(createTagRequest.getName()).isPresent()) {
+            throw new EntityAlreadyExistsException("Tag with name '" + createTagRequest.getName() + "' already exists");
+        }
+
         Tag tag = new Tag();
         tag.setName(createTagRequest.getName());
 
@@ -48,7 +54,7 @@ public class TagServiceImpl {
     }
 
     public GetTagResponse getById(UUID id) {
-        Tag tag = tagRepository.findById(id).orElseThrow(() -> new RuntimeException("Tag not found "));
+        Tag tag = tagRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Tag not found with id: " + id));
 
         GetTagResponse response = new GetTagResponse();
         response.setId(tag.getId());
@@ -58,7 +64,14 @@ public class TagServiceImpl {
     }
 
     public UpdatedTagResponse update(UUID id, UpdateTagRequest updateTagRequest) {
-        Tag tag = tagRepository.findById(id).orElseThrow(() -> new RuntimeException("Tag not found "));
+        Tag tag = tagRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Tag not found with id: " + id));
+
+        // Check if another tag with the same name exists
+        tagRepository.findByName(updateTagRequest.getName()).ifPresent(existingTag -> {
+            if (!existingTag.getId().equals(id)) {
+                throw new EntityAlreadyExistsException("Tag with name '" + updateTagRequest.getName() + "' already exists");
+            }
+        });
 
         tag.setName(updateTagRequest.getName());
         tag = tagRepository.save(tag);
@@ -71,7 +84,7 @@ public class TagServiceImpl {
     }
 
     public void delete(UUID id) {
-        Tag tag = tagRepository.findById(id).orElseThrow(() -> new RuntimeException("Tag not found "));
+        Tag tag = tagRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Tag not found with id: " + id));
 
         tagRepository.delete(tag);
     }

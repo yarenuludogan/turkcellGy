@@ -20,6 +20,8 @@ import com.turkcell.spring_starter.dto.request.UpdateTagRequest;
 import com.turkcell.spring_starter.dto.response.UpdatedTagResponse;
 import com.turkcell.spring_starter.service.TagServiceImpl;
 
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("/api/tags")
@@ -28,11 +30,6 @@ public class TagsController {
 
     public TagsController(TagServiceImpl tagServiceImpl) {
         this.tagServiceImpl = tagServiceImpl;
-    }
-
-    @PostMapping
-    public CreatedTagResponse create(@RequestBody CreateTagRequest createTagRequest) {
-        return tagServiceImpl.create(createTagRequest);
     }
 
     @GetMapping
@@ -46,8 +43,13 @@ public class TagsController {
     }
 
     @PutMapping("/{id}")
-    public UpdatedTagResponse update(@PathVariable UUID id, @RequestBody UpdateTagRequest updateTagRequest) {
+    public UpdatedTagResponse update(@PathVariable UUID id, @RequestBody @Valid UpdateTagRequest updateTagRequest) {
         return tagServiceImpl.update(id, updateTagRequest);
+    }
+    
+    @PostMapping
+    public CreatedTagResponse create(@RequestBody @Valid CreateTagRequest createTagRequest) {
+        return tagServiceImpl.create(createTagRequest);
     }
 
     @DeleteMapping("/{id}")

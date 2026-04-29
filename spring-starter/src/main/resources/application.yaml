@@ -2,6 +2,24 @@ spring:
     application:
         name: spring-starter
     datasource:
+        url: jdbc:h2:mem:testdb
+        driver-class-name: org.h2.Driver
+        username: sa
+        password:
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+    h2:
+        console:
+            enabled: true
+
+---
+spring:
+    config:
+        activate:
+            on-profile: prod
+    datasource:
         url: jdbc:postgresql://localhost:5432/eticaret
         username: admin
         password: admin

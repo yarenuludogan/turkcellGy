@@ -20,6 +20,8 @@ import com.turkcell.spring_starter.dto.request.UpdateProductRequest;
 import com.turkcell.spring_starter.dto.response.UpdatedProductResponse;
 import com.turkcell.spring_starter.service.ProductServiceImpl;
 
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("/api/products")
@@ -31,7 +33,7 @@ public class ProductsController {
     }
 
     @PutMapping("/{id}")
-        public UpdatedProductResponse update(@PathVariable UUID id, @RequestBody UpdateProductRequest updateProductRequest) {
+        public UpdatedProductResponse update(@PathVariable UUID id, @RequestBody @Valid UpdateProductRequest updateProductRequest) {
             return productServiceImpl.update(id, updateProductRequest);
     }
 
@@ -46,7 +48,7 @@ public class ProductsController {
     }
 
     @PostMapping
-    public CreatedProductResponse create(@RequestBody CreateProductRequest createProductRequest) {
+    public CreatedProductResponse create(@RequestBody @Valid CreateProductRequest createProductRequest) {
         return productServiceImpl.create(createProductRequest);
     }
     
