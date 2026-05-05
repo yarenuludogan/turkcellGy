@@ -6,10 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.List;
 
-/**
- * LoanRepository - Loan entity'si için veri erişim katmanı
- * Ödünçleme işlemlerini yönetir
- */
+
 @Repository
 public interface LoanRepository extends JpaRepository<Loan, Long> {
     
