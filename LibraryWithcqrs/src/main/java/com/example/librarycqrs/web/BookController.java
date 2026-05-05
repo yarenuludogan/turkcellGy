@@ -1,17 +1,22 @@
 package com.example.librarycqrs.web;
 
 import com.example.librarycqrs.application.command.CreateBookCommand;
+import com.example.librarycqrs.application.command.DeleteBookCommand;
+import com.example.librarycqrs.application.command.UpdateBookCommand;
 import com.example.librarycqrs.application.mediator.Mediator;
 import com.example.librarycqrs.application.query.GetAllBooksQuery;
 import com.example.librarycqrs.application.query.GetBookByIdQuery;
 import com.example.librarycqrs.application.view.BookView;
 import com.example.librarycqrs.web.dto.CreateBookRequest;
 import com.example.librarycqrs.web.dto.CreatedResponse;
+import com.example.librarycqrs.web.dto.UpdateBookRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -51,5 +56,17 @@ public class BookController {
     @GetMapping
     public List<BookView> getAllBooks() {
         return mediator.send(new GetAllBooksQuery());
+    }
+
+    @PutMapping("/{id}")
+    public BookView updateBook(@PathVariable Long id, @Valid @RequestBody UpdateBookRequest request) {
+        mediator.send(new UpdateBookCommand(id, request.title(), request.isbn(), request.publishedYear(), request.authorId()));
+        return mediator.send(new GetBookByIdQuery(id));
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteBook(@PathVariable Long id) {
+        mediator.send(new DeleteBookCommand(id));
     }
 }

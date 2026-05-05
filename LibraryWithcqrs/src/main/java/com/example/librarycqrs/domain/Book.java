@@ -54,4 +54,20 @@ public class Book {
     public Author getAuthor() {
         return author;
     }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public void setPublishedYear(Integer publishedYear) {
+        this.publishedYear = publishedYear;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
 }
