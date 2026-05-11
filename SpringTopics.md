@@ -1,4 +1,4 @@
-# Inversion Of Control (IoC)
+### Inversion Of Control 
 
 Bir yazılım tasarım prensibidir. Uygulama içindeki objectlerin yönetimi sağlanarak bağımlılıkların en aza indirilmesi hedeflenir.  
 
@@ -10,7 +10,7 @@ Burada amaç projenin framework tarafından yönetilmesi ve bizim kodumuzun bu y
 
 ---
 
-## Kullanımı
+### Kullanımı
 
 Temelde bir nesne, ihtiyaç duyduğu başka bir nesneyi **kendisi oluşturur**:
 
@@ -47,7 +47,7 @@ Bu uygulama yöntemine **Dependency Injection (DI)** denir.
 
 ---
 
-# Bean
+### Bean
 
 **Bean**, Spring IoC Container tarafından oluşturulan, yapılandırılan ve yönetilen nesnedir.
 
@@ -64,7 +64,7 @@ Spring bu sınıfın nesnesini oluşturur ve yönetir.
 
 ---
 
-# Bean Scope
+### Bean Scope
 
 Bir Bean'in ne sıklıkla oluşturulacağını **Scope** belirler.
 
@@ -76,7 +76,7 @@ Bir Bean'in ne sıklıkla oluşturulacağını **Scope** belirler.
 | Session | Her HTTP oturumu için yeni nesne oluşturulur 
 
 ---
-# Sık Kullanılan Exception'lar
+### Sık Kullanılan Exception'lar
 
 | Exception | Açıklama |
 |---|---|
@@ -88,7 +88,7 @@ Bir Bean'in ne sıklıkla oluşturulacağını **Scope** belirler.
 | `HttpRequestMethodNotSupportedException` | Yanlış HTTP methodu kullanıldığında oluşur |
 
 ---
-## IllegalArgumentException
+### IllegalArgumentException
 
 ```java
 public void setAge(int age) {
@@ -98,7 +98,7 @@ public void setAge(int age) {
     }
 }
 ```
-# Sık Kullanılan Spring / Hibernate Annotation'ları
+### Sık Kullanılan Spring / Hibernate Annotation'ları
 
 | Annotation | Açıklama |
 |---|---|
@@ -154,7 +154,7 @@ public void setAge(int age) {
 
 ---
 
-# Validation Annotation'ları
+### Validation Annotation'ları
 
 | Annotation | Açıklama |
 |---|---|
@@ -169,7 +169,7 @@ public void setAge(int age) {
 
 ---
 
-# JWT / Security Annotation'ları
+### JWT / Security Annotation'ları
 
 | Annotation | Açıklama |
 |---|---|
@@ -179,14 +179,14 @@ public void setAge(int age) {
 | `@RolesAllowed` | Yetki kontrolü yapar |
 
 
-# JPA Relationship Annotation'ları
+### JPA Relationship Annotation'ları
 
 
 # @OneToOne
 
 Bir kaydın yalnızca bir başka kayıtla ilişkili olduğu durumdur.
 
-## Örnek
+### Örnek
 
 Bir kullanıcının yalnızca bir kimliği olması:
 
@@ -197,7 +197,7 @@ User -> IdentityCard
 
 ---
 
-## Kullanım
+### Kullanım
 
 ```java
 @Entity
@@ -214,7 +214,7 @@ public class User {
 
 ---
 
-## Açıklama
+### Açıklama
 
 | Annotation | Görevi |
 |---|---|
@@ -223,7 +223,7 @@ public class User {
 
 ---
 
-# @OneToMany
+### @OneToMany
 
 Bir kaydın birden fazla kayıtla ilişkili olduğu durumdur.
 
@@ -238,7 +238,7 @@ Book -> Review
 
 ---
 
-## Kullanım
+### Kullanım
 
 ```java
 @Entity
@@ -254,7 +254,7 @@ public class Book {
 
 ---
 
-## Karşı taraf
+### Karşı taraf
 
 ```java
 @Entity
@@ -271,7 +271,7 @@ public class Review {
 
 ---
 
-## mappedBy Nedir?
+### mappedBy Nedir?
 
 ```java
 mappedBy = "book"
@@ -295,7 +295,7 @@ book_id
 
 Birden fazla kaydın tek bir kayda bağlı olduğu durumdur.
 
-## Örnek
+### Örnek
 
 Birçok öğrenci aynı sınıfta olabilir:
 
@@ -323,7 +323,7 @@ public class Student {
 
 ---
 
-## Database Yapısı
+### Database Yapısı
 
 ### Student Table
 
@@ -336,11 +336,11 @@ Burada iki öğrenci aynı sınıfa bağlıdır.
 
 ---
 
-# @ManyToMany
+### @ManyToMany
 
 Birden fazla kaydın birden fazla kayıtla ilişkili olduğu durumdur.
 
-## Örnek
+### Örnek
 
 Bir öğrencinin birçok dersi olabilir,
 bir dersin de birçok öğrencisi olabilir:
@@ -385,11 +385,11 @@ public class Course {
 ```
 ---
 
-# Ara Tablo (Join Table)
+### Join Table
 
 Many-to-Many ilişkide otomatik ara tablo oluşur:
 
-## student_course
+### student_course
 
 | student_id | course_id |
 |---|---|
@@ -399,7 +399,7 @@ Many-to-Many ilişkide otomatik ara tablo oluşur:
 
 ---
 
-# FetchType Nedir?
+### FetchType Nedir?
 
 İlişkili verilerin ne zaman çekileceğini belirler.
 
@@ -419,7 +419,7 @@ private List<Review> reviews;
 
 ---
 
-# Cascade Nedir?
+### Cascade Nedir?
 
 Ana entity üzerinde işlem yapıldığında ilişkili entity'lere de uygulanmasını sağlar.
 
@@ -452,7 +452,7 @@ yapılırsa:
 
 ---
 
-# orphanRemoval Nedir?
+### orphanRemoval Nedir?
 
 Listeden çıkarılan child entity'nin DB'den de silinmesini sağlar.
 
@@ -465,8 +465,6 @@ Listeden çıkarılan child entity'nin DB'den de silinmesini sağlar.
 
 ---
 
-# İlişki Özeti
-
 | Annotation | Anlam |
 |---|---|
 | `@OneToOne` | 1 -> 1 |
@@ -476,43 +474,8 @@ Listeden çıkarılan child entity'nin DB'den de silinmesini sağlar.
 
 ---
 
-# En Çok Kullanılan Yapı
 
-Gerçek projelerde en yaygın ilişki:
-
-```java
-@ManyToOne
-@JoinColumn(name = "user_id")
-private User user;
-```
-
-Çünkü çoğu sistem:
-
-- sipariş -> kullanıcı
-- yorum -> kullanıcı
-- ürün -> kategori
-
-mantığında çalışır.
-
----
-
-# Önemli Best Practice
-
-## ❌ Tüm ilişkileri EAGER yapma
-
-Bu performans sorunlarına yol açar.
-
-✔ Genelde:
-
-```java
-fetch = FetchType.LAZY
-```
-
-tercih edilir.
-
----
-
-# JSON Sonsuz Döngü Problemi
+### JSON Sonsuz Döngü Problemi
 
 İki entity birbirini referans ederse:
 
