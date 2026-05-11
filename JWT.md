@@ -1,11 +1,7 @@
 # JWT (JSON Web Token) Nedir?
 
 JWT, kullanıcıların kimliğini doğrulamak ve yetkilendirme işlemlerini yapmak için kullanılan **stateless (sunucu tarafında oturum tutmayan)** bir güvenlik mekanizmasıdır.  
-
 Temel amaç, kullanıcı login olduktan sonra ona bir token vermek ve bu token ile sonraki tüm isteklerde kullanıcının tekrar login olmasına gerek kalmadan sistemde tanınmasını sağlamaktır.
-
-JWT özellikle REST API ve Spring Security gibi yapılarda çok yaygın kullanılır.
-
 ---
 
 # JWT’nin Temel Mantığı
@@ -15,8 +11,6 @@ JWT sistemi 3 ana aşamadan oluşur:
 1. Kullanıcı login olur
 2. Server kullanıcıya bir token üretir
 3. Kullanıcı bu token ile tüm protected endpoint’lere erişir
-
-Bu yapı sayesinde sunucu kullanıcı bilgisi tutmaz, sadece token üzerinden doğrulama yapar.
 
 ---
 
@@ -67,7 +61,6 @@ Burada:
 ## 3. Signature
 
 Token’ın değiştirilmediğini garanti eden imzadır.
-
 Server secret key ile oluşturulur.
 
 ---
@@ -75,9 +68,7 @@ Server secret key ile oluşturulur.
 # JWT Nasıl Çalışır?
 
 JWT’nin çalışma mantığı şu şekildedir:
-
 Kullanıcı login olur → sistem şifreyi kontrol eder → doğruysa JWT token üretir → kullanıcıya gönderir.
-
 Kullanıcı sonraki isteklerde bu token’ı gönderir:
 
 ```
@@ -92,23 +83,11 @@ Server bu token’ı doğrular:
 Eğer her şey doğruysa kullanıcı sisteme erişir.
 
 ---
-
-# JWT Authentication vs Authorization
-
-JWT sistemi hem authentication hem authorization için kullanılır.
-
-Authentication, kullanıcının kim olduğunu doğrular. Authorization ise kullanıcının hangi işlemleri yapabileceğini belirler.
-
-Örneğin:
-- Login → Authentication
-- Admin endpoint erişimi → Authorization
-
 ---
 
 # Spring Boot’ta JWT Akışı
 
 Spring Security içinde JWT genelde bir filter üzerinden çalışır.
-
 İstek geldiğinde şu akış oluşur:
 
 1. Request gelir
@@ -123,9 +102,7 @@ Spring Security içinde JWT genelde bir filter üzerinden çalışır.
 # JWT Filter Mantığı
 
 JWT Filter, her request’i intercept eder ve header içindeki token’ı kontrol eder.
-
 Eğer token yoksa veya geçersizse request direkt 401 Unauthorized döner.
-
 Eğer token doğruysa kullanıcı SecurityContext içine set edilir ve request devam eder.
 
 ---
@@ -174,7 +151,6 @@ JWT genelde şu durumlarda kullanılır:
 
 # Spring Boot JWT Örnek Kullanım
 
-Aşağıda basit bir JWT login ve kullanım akışı verilmiştir.
 
 ---
 
@@ -193,7 +169,6 @@ Content-Type: application/json
   "password": "1234"
 }
 ```
-
 ---
 
 ## 2. Response (Token Üretimi)
@@ -263,7 +238,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 ## 5. Security Config
 
-JWT filter chain’e eklenir:
+Spring Security config kısmı, uygulamanın güvenlik kurallarını tanımladığımız yerdir. Burada hangi endpoint’lerin korunacağı, hangi rollerin erişebileceği, JWT token doğrulama filtrelerinin nasıl çalışacağı gibi ayarlar yapılır.
 
 ```java id="securityconfig"
 http
