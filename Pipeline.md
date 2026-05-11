@@ -1,4 +1,4 @@
-# Pipeline Nedir
+### Pipeline Nedir
 
 Pipeline, isteğin geçtiği işlem hattıdır. Bir istek geldiğinde direkt controller’a, ardından service katmanına gitmez. 
 
@@ -14,13 +14,12 @@ gibi katmanlardan geçer.
 
 ---
 
-# Logging Nedir
-
+### Logging 
 Logging, uygulamanın çalışma sürecinde meydana gelen olayların (komut çalıştırma, sorgu, hata, uyarı vb.) kayıt altına alınmasıdır.
 
 ---
 
-## Logging Örneği
+### Logging Örneği
 
 ```java
 @Service
@@ -66,7 +65,7 @@ public class ProductQueryHandler {
 
 ---
 
-# Authentication ve Authorization
+### Authentication ve Authorization
 
 | Kavram | Açıklama |
 |---|---|
@@ -75,7 +74,7 @@ public class ProductQueryHandler {
 
 ---
 
-# Pipeline Akışı
+### Pipeline Akışı
 
 ```text
 HTTP Request
@@ -97,7 +96,7 @@ Response
 
 ---
 
-# Pipeline Behavior Nedir
+### Pipeline Behavior Nedir
 
 Pipeline Behavior, request handler’a ulaşmadan önce ve sonra çalışan katmandır.
 
@@ -113,7 +112,7 @@ Küçük değer önce çalışır.
 
 ---
 
-# Behavior Sıralama Örneği
+### Behavior Sıralama Örneği
 
 ```java
 @Aspect
@@ -200,10 +199,7 @@ public class TransactionBehavior {
 
 ---
 
-# Authorization Behavior
-
-## Amaç
-
+### Authorization Behavior
 Kullanıcının belirli bir işlemi yapmaya yetkisi olup olmadığını kontrol eder.
 
 Örneğin:
@@ -217,7 +213,7 @@ Eğer yetki yoksa exception fırlatılır.
 
 ---
 
-## Authorization Behavior Örneği
+### Authorization Behavior Örneği
 
 ```java
 @Component
@@ -240,12 +236,9 @@ public class AuthorizationBehavior {
 
 ---
 
-# Logging Behavior
-
-## Amaç
+### Logging Behavior
 
 Komut ve sorguların çalıştırılma sürecini kaydeder.
-
 Şunlar loglanabilir:
 
 1. Hangi handler çalıştı
@@ -279,10 +272,9 @@ public class LoggingBehavior {
 
 ---
 
-# Log Seviyeleri
+### Log Seviyeleri
 
-## 1. TRACE
-
+### 1. TRACE
 En detaylı log seviyesidir.
 
 Adım adım akış takibi için kullanılır.
@@ -307,8 +299,7 @@ Genellikle development/debug ortamında kullanılır.
 
 ---
 
-## 2. DEBUG
-
+### 2. DEBUG
 Hata ayıklama amacıyla kullanılır.
 
 ```java
@@ -334,8 +325,7 @@ public Product findProductById(Long id) {
 
 ---
 
-## 3. INFO
-
+### 3. INFO
 Normal sistem olaylarını kaydeder.
 
 ```java
@@ -358,8 +348,7 @@ public void createUser(User user) {
 
 ---
 
-## 4. WARN
-
+### 4. WARN
 Beklenmedik ama sistemi durdurmayan durumları belirtir.
 
 ```java
@@ -382,8 +371,7 @@ public void updateStock(
 
 ---
 
-## 5. ERROR
-
+### 5. ERROR
 Sistemin çalışmasını engelleyen kritik hataları belirtir.
 
 ```java
@@ -408,7 +396,7 @@ public void processPayment(Payment payment) {
 
 ---
 
-# Log Seviyesi Özeti
+### Log Seviyesi Özeti
 
 | Log Seviyesi | Amaç | Kullanım |
 |---|---|---|
@@ -420,22 +408,17 @@ public void processPayment(Payment payment) {
 
 ---
 
-# Performance Behavior
-
-## Amaç
+### Performance Behavior
 
 Bir işlemin ne kadar sürede tamamlandığını ölçer.
-
 Özellikle CQRS’de:
-
 - command handler
 - query handler
 
 performansını takip etmek için kullanılır.
-
 ---
 
-## Performance Behavior Örneği
+### Performance Behavior Örneği
 
 ```java
 @Component
@@ -462,19 +445,15 @@ public class PerformanceBehavior {
 
 ---
 
-# Transaction Behavior
-
-## Amaç
+### Transaction Behavior
 
 Birden fazla database işleminin tek bir transaction içinde güvenli şekilde çalışmasını sağlar.
-
 Eğer bir adımda hata oluşursa tüm işlem geri alınır (rollback).
-
 Spring’te genellikle `@Transactional` anotasyonu kullanılır.
 
 ---
 
-## Transaction Behavior Örneği
+### Transaction Behavior Örneği
 
 ```java
 @Service
@@ -490,7 +469,7 @@ public class TransactionBehavior {
 
 ---
 
-# Transaction Nedir
+### Transaction Nedir
 
 Transaction, veritabanı sistemlerinde bir grup işlemin tek bir bütün olarak çalıştırılmasıdır.
 
@@ -504,7 +483,7 @@ Bu sayede veri tutarlılığı korunur.
 
 ---
 
-# ACID Özellikleri
+### ACID Özellikleri
 
 | Özellik | Açıklama |
 |---|---|
@@ -515,9 +494,7 @@ Bu sayede veri tutarlılığı korunur.
 
 ---
 
-# Transaction Örneği
-
-## Bankacılık Senaryosu
+### Transaction Örneği
 
 ```java
 @Service
@@ -557,7 +534,7 @@ public class BankService {
 
 ---
 
-# Commit ve Rollback
+### Commit ve Rollback
 
 | Kavram | Açıklama |
 |---|---|
@@ -566,15 +543,14 @@ public class BankService {
 
 ---
 
-# Isolation Level Nedir
+### Isolation Level Nedir
 
 Isolation Level, transaction’ların birbirinden ne kadar izole çalışacağını belirleyen ayardır.
-
 Aynı anda çalışan transaction’ların birbirini nasıl etkileyeceğini kontrol eder.
 
 ---
 
-# Isolation Problemleri
+### Isolation Problemleri
 
 | Problem | Açıklama |
 |---|---|
@@ -584,10 +560,9 @@ Aynı anda çalışan transaction’ların birbirini nasıl etkileyeceğini kont
 
 ---
 
-# READ_UNCOMMITTED
+### READ_UNCOMMITTED
 
 En düşük güvenlik seviyesidir.
-
 Başka transaction’ın commit etmediği veri okunabilir.
 
 ```java
@@ -601,49 +576,18 @@ public void checkStock(Long productId) {
 
 ---
 
-# READ_COMMITTED
+### READ_COMMITTED
 
 Sadece commit edilmiş veri okunabilir.
-
 Dirty read engellenir.
 
-```java
-@Transactional(
-        isolation = Isolation.READ_COMMITTED
-)
-public void checkStock(Long productId) {
-
-}
-```
-
----
-
-# REPEATABLE_READ
+### REPEATABLE_READ
 
 Aynı transaction içinde aynı sorgu tekrar çalıştırıldığında aynı sonuç döner.
 
-```java
-@Transactional(
-        isolation = Isolation.REPEATABLE_READ
-)
-public void checkStock(Long productId) {
-
-}
-```
-
----
-
-# SERIALIZABLE
+### SERIALIZABLE
 
 En güvenli ama en yavaş isolation seviyesidir.
-
 Transaction’lar sırayla çalışır.
 
-```java
-@Transactional(
-        isolation = Isolation.SERIALIZABLE
-)
-public void checkStock(Long productId) {
 
-}
-```
