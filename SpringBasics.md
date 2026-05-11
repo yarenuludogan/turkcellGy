@@ -59,11 +59,13 @@ Bu proje için katmanlar şu sırayla çalışır:
   
  ## Nasıl Kullanılır
  
-  // Controller 
-  @PostMapping
+```java
+// Controller 
+@PostMapping
 public BookResponse addBook(@RequestBody CreateBookRequest request) {
     return bookService.add(request);
 }
+```
 
 ## 5. Controller Katmanı
 - `controller` klasöründe yer alır.
