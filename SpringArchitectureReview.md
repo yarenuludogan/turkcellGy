@@ -11,21 +11,21 @@ HTTP isteği gelir → Controller → Service → Repository → Database → ge
 # İstek geldi
 
 POST /api/users
-```java
+```
 {
 "name": "Ali",
 "email": "[ali@mail.com](mailto:ali@mail.com)"
 }
-
+```
 # Controller
 
 İsteği karşılayan katman, requesti alır,DTO’ya çevirir veya DTO olarak alır, service katmanına iletir, response döner(ResponseEntity)
-
+```
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
 
-```
+
 private final UserService userService;
 
 public UserController(UserService userService) {
@@ -39,13 +39,13 @@ public ResponseEntity<UserResponseDto> createUser(@RequestBody UserCreateDto dto
 }
 ```
 
-}
+
 
 `@RequestBody` → JSON veriyi Java objesine çevirir (DTO)
 # DTO
 
 İstek alındığında entity taşımak yerine bunu kullanırız.
-
+```
 public class UserCreateDto {
 private String name;
 private String email;
@@ -56,15 +56,15 @@ private Long id;
 private String name;
 private String email;
 }
-
+```
 # Service
 
 İş kuralı uygulanır, validasyon yapılır, repository çağırılır, DTO-Entity dönüşümü yapılır.
-
+```
 @Service
 public class UserService {
 
-```
+
 private final UserRepository userRepository;
 
 public UserService(UserRepository userRepository) {
@@ -87,7 +87,6 @@ public UserResponseDto createUser(UserCreateDto dto) { //dto dönüşümü yapı
 }
 ```
 
-}
 
 # Entity
 
@@ -122,7 +121,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 gibi hazır methodlar sağlar.
 
-
+```
 
 // Service katmanlarını controller içine inject ediyor.
 // Controller bu servisler üzerinden işlem yapacak.
@@ -148,7 +147,7 @@ private CategoryService categoryService;
 @PostMapping
 public ResponseEntity<BookResponse> createBook(
 
-```
+
     // Gelen JSON verisini Java objesine çevirir.
     // @Valid validation çalıştırır.
     @Valid @RequestBody BookCreateRequest request) {
@@ -218,7 +217,7 @@ Book saved = bookService.save(book);
 return ResponseEntity
         .status(HttpStatus.CREATED)
         .body(BookResponse.fromEntity(saved));
-```
+
 
 }
 
@@ -232,7 +231,7 @@ return ResponseEntity
 @GetMapping
 public ResponseEntity<List<BookResponse>> getAllBooks() {
 
-```
+
 // DB'deki tüm kitaplar alınır.
 List<Book> books = bookService.findAll();
 
@@ -247,7 +246,7 @@ List<BookResponse> responses = books.stream()
 
 // 200 OK response döner.
 return ResponseEntity.ok(responses);
-```
+
 
 }
 
@@ -260,7 +259,7 @@ return ResponseEntity.ok(responses);
 @GetMapping("/{id}")
 public ResponseEntity<BookResponse> getBookById(
 
-```
+
     // URL içindeki id alınır.
     @PathVariable Long id) {
 
@@ -275,7 +274,7 @@ return bookService.findById(id)
 
         // Kitap yoksa 404 dön.
         .orElse(ResponseEntity.notFound().build());
-```
+
 
 }
 
@@ -288,7 +287,7 @@ return bookService.findById(id)
 @GetMapping("/search/title")
 public ResponseEntity<List<BookResponse>> getBooksByTitle(
 
-```
+
     // Query parameter alır.
     @RequestParam String title) {
 
@@ -301,7 +300,7 @@ List<BookResponse> responses = books.stream()
         .toList();
 
 return ResponseEntity.ok(responses);
-```
+
 
 }
 
@@ -314,7 +313,7 @@ return ResponseEntity.ok(responses);
 @GetMapping("/search/isbn/{isbn}")
 public ResponseEntity<BookResponse> getBookByIsbn(
 
-```
+
     // URL'den isbn alınır.
     @PathVariable String isbn) {
 
@@ -328,7 +327,7 @@ return book != null
             BookResponse.fromEntity(book)
         )
         : ResponseEntity.notFound().build();
-```
+
 
 }
 
@@ -341,7 +340,7 @@ return book != null
 @GetMapping("/search/author/{authorId}")
 public ResponseEntity<List<BookResponse>> getBooksByAuthor(
 
-```
+
     // URL'den authorId alınır.
     @PathVariable Long authorId) {
 
@@ -355,7 +354,7 @@ List<BookResponse> responses = books.stream()
         .toList();
 
 return ResponseEntity.ok(responses);
-```
+
 
 }
 
@@ -368,7 +367,7 @@ return ResponseEntity.ok(responses);
 @PutMapping("/{id}")
 public ResponseEntity<BookResponse> updateBook(
 
-```
+
     // URL'den id alınır.
     @PathVariable Long id,
 
@@ -420,7 +419,7 @@ Book saved = bookService.update(id, updatedBook);
 return ResponseEntity.ok(
         BookResponse.fromEntity(saved)
 );
-```
+
 
 }
 
@@ -433,7 +432,6 @@ return ResponseEntity.ok(
 @DeleteMapping("/{id}")
 public ResponseEntity<Void> deleteBook(
 
-```
     // URL'den id alınır.
     @PathVariable Long id) {
 
@@ -444,4 +442,3 @@ bookService.delete(id);
 return ResponseEntity.noContent().build();
 ```
 
-}
