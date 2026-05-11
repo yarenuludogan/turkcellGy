@@ -277,7 +277,7 @@ public class Review {
 mappedBy = "book"
 ```
 
-şunu belirtir:
+>Bir ilişkide many-to-one olan tarafı joinColumn ile FK yaparız, diğer tabloda one-to-many olan karşılığı da mappedBy ile işaretleriz. Mapped by FK olmayan pasif tarafa yazılır.
 
 > İlişkiyi yöneten taraf `Review` entity'sindeki `book` alanıdır.
 
@@ -354,6 +354,8 @@ N            N
 
 # Kullanım
 
+Hangi tarafa koyacağın sana kalmış
+
 ```java
 @Entity
 public class Student {
@@ -370,7 +372,17 @@ public class Student {
     private List<Course> courses;
 }
 ```
+```java
+@Entity
+public class Course {
 
+    @Id
+    private Long id;
+
+    @ManyToMany(mappedBy = "courses")
+    private List<Student> students;
+}
+```
 ---
 
 # Ara Tablo (Join Table)
