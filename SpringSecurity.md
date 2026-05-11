@@ -1,4 +1,4 @@
-# JWT Kod Mantığı
+### JWT Kod Mantığı
 
 JWT sistemi Spring’de genelde 3 ana kod parçası ile çalışır:
 1. Token üretme (Login)
@@ -6,7 +6,7 @@ JWT sistemi Spring’de genelde 3 ana kod parçası ile çalışır:
 3. Security ayarı (Config)
 ---
 
-# 1. JWT Token Üretme (Login Service)
+### 1. JWT Token Üretme (Login Service)
 
 Kullanıcı login olduğunda JWT burada üretilir.
 
@@ -30,7 +30,7 @@ public class JwtService {
 }
 ```
 
-# 2. JWT Token Doğrulama (Filter)
+### 2. JWT Token Doğrulama (Filter)
 
 Her request buradan geçer.
 
@@ -95,7 +95,7 @@ SecurityContextHolder
 
 ---
 
-# 3. Security Config (JWT Aktif Etme)
+### 3. Security Config (JWT Aktif Etme)
 
 ```java id="security1"
 @Configuration
@@ -152,7 +152,7 @@ Yani:
 
 ---
 
-# 4. Login Controller (JWT üretimi tetiklenir)
+### 4. Login Controller (JWT üretimi tetiklenir)
 
 ```java id="login1"
 @RestController
