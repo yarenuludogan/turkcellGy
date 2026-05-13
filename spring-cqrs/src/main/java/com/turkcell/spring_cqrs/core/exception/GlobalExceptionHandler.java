@@ -9,20 +9,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(UnauthenticatedException.class)
-    public ResponseEntity<String> handleUnauthenticated(
-            UnauthenticatedException exception) {
-
-        return ResponseEntity
-                .status(HttpStatus.UNAUTHORIZED)
-                .body(exception.getMessage());
+    public ResponseEntity<String> handleUnauthenticated(UnauthenticatedException exception) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(exception.getMessage());
     }
 
-    @ExceptionHandler(UnauthorizedException.class)
-    public ResponseEntity<String> handleUnauthorized(
-            UnauthorizedException exception) {
-
-        return ResponseEntity
-                .status(HttpStatus.FORBIDDEN)
-                .body(exception.getMessage());
+    @ExceptionHandler(AuthorizationException.class)
+    public ResponseEntity<String> handleAuthorization(AuthorizationException exception) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(exception.getMessage());
     }
 }

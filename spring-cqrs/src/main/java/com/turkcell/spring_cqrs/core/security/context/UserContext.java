@@ -18,7 +18,7 @@ public class UserContext {
     public void setUser(String userId, String email, List<String> roles) {
         this.isAuthenticated = true;
         this.userId = userId;
-        this.roles = roles;
+        this.roles = roles != null ? roles : List.of();
         this.email = email;
     }
 
