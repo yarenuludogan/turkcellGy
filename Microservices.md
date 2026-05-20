@@ -17,6 +17,14 @@ gRPC (Google Remote Procedure Call), Google tarafından geliştirilmiş yüksek 
 
 REST (Representational State Transfer) ise API tasarlamak için kullanılan mimari bir yaklaşımdır. REST’te istemci ve sunucu HTTP protokolü üzerinden iletişim kurar ve genellikle kaynak (resource) tabanlı bir yapı kullanılır. Yani istemci bir fonksiyon çağırmaz; bunun yerine sunucudan veri ister (GET), veri ekler (POST), günceller (PUT/PATCH) veya siler (DELETE). REST daha basit, yaygın ve HTTP standartlarıyla uyumlu bir yapıdır.
 
+### Senkron - Asenkron 
+Sync iletişimde istek atıldığında anlık cevap gelmesi gerekiyorsa kullanılır htttp,gRpc; asenkronda ile rabbitMq veya apache Kafka kullanılır.
+### RabbitMq - Apache Kafka 
+
+RabbitMQ, mikroservislerde asynchronous yani asenkron iletişim sağlamak için kullanılan bir message broker sistemidir. Servisler birbirine doğrudan istek atmak yerine mesajları RabbitMQ’ya gönderir. RabbitMQ bu mesajları ilgili servislere iletir. Böylece servisler birbirini beklemek zorunda kalmaz ve loose coupling sağlanır. Örneğin bir sipariş oluşturulduğunda Order Service mesajı RabbitMQ’ya gönderir, Payment Service ve Notification Service bu mesajı kendi zamanında işleyebilir. RabbitMQ özellikle task queue, job processing ve klasik mesajlaşma sistemlerinde yaygın kullanılır.
+
+Apache Kafka ise yüksek performanslı dağıtık event streaming platformudur. Kafka da asenkron iletişim sağlar ancak RabbitMQ’dan farklı olarak büyük veri akışlarını ve event stream’lerini yönetmek için tasarlanmıştır. Kafka mesajları sadece kısa süreli iletmez, aynı zamanda log şeklinde saklayabilir. Bu nedenle event-driven architecture, real-time analytics ve büyük ölçekli veri sistemlerinde çok kullanılır. Örneğin milyonlarca kullanıcı hareketi, ödeme işlemleri veya log kayıtları Kafka üzerinden akıtılabilir. Çok yüksek throughput ve scalability sunması Kafka’nın en büyük avantajlarından biridir.
+
 ### REST vs gRPC
 
 gRPC ve REST aslında API tasarlamanın iki farklı yaklaşımıdır. gRPC’de iletişim “remote procedure call” mantığıyla çalışır; yani istemci doğrudan sunucudaki bir metodu çağırır. REST’te ise iletişim resource (kaynak) odaklıdır ve HTTP metodları üzerinden veri yönetimi yapılır. Bu nedenle gRPC daha çok fonksiyon çağrısı gibi çalışırken, REST veri odaklı bir model sunar.
