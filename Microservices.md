@@ -9,4 +9,18 @@ Bir diğer yaklaşım ise service mesh yapısıdır. Service mesh, servisler ara
 
 Microservice mimarisinin bir avantajı da teknolojik bağımsızlıktır. Her servis farklı bir programlama dili veya framework kullanılarak geliştirilebilir. Servisler kendi içinde bağımsız çalışırken API, message broker veya service mesh gibi yapılar sayesinde birbiriyle iletişim kurmaya devam eder.
 
-CI/CD süreçlerinde ise iki farklı repository yaklaşımı bulunur. Monorepo yaklaşımında tüm servisler tek bir repository içerisinde tutulur ve her servis ayrı klasörlerde yönetilir. Bu yapı merkezi yönetim açısından avantaj sağlar. Polyrepo yaklaşımında ise her microservice için ayrı repository kullanılır. Böylece servisler tamamen bağımsız geliştirilebilir ve farklı ekipler tarafından daha rahat yönetilebilir.
+CI/CD süreçlerinde ise iki farklı repository yaklaşımı bulunur. Monorepo yaklaşımında tüm servisler tek bir repository içerisinde tutulur ve her servis ayrı klasörlerde yönetilir. Bu yapı merkezi yönetim açısından avantaj sağlar. Polyrepo yaklaşımında ise her microservice için ayrı repository kullanılır. Böylece servisler tamamen bağımsız geliştirilebilir ve farklı ekipler tarafından daha rahat yönetilebilir.  
+
+### gRPC
+
+gRPC (Google Remote Procedure Call), Google tarafından geliştirilmiş yüksek performanslı bir iletişim framework’üdür. Temel amacı, bir istemcinin uzaktaki bir sunucu üzerindeki fonksiyonları sanki kendi yerel metoduymuş gibi çağırabilmesini sağlamaktır. Bu yapı client-server iletişimini daha hızlı, verimli ve düşük gecikmeli hale getirir. gRPC, özellikle mikroservis mimarilerinde servisler arası yüksek performanslı iletişim gerektiğinde tercih edilir.
+
+REST (Representational State Transfer) ise API tasarlamak için kullanılan mimari bir yaklaşımdır. REST’te istemci ve sunucu HTTP protokolü üzerinden iletişim kurar ve genellikle kaynak (resource) tabanlı bir yapı kullanılır. Yani istemci bir fonksiyon çağırmaz; bunun yerine sunucudan veri ister (GET), veri ekler (POST), günceller (PUT/PATCH) veya siler (DELETE). REST daha basit, yaygın ve HTTP standartlarıyla uyumlu bir yapıdır.
+
+### REST vs gRPC
+
+gRPC ve REST aslında API tasarlamanın iki farklı yaklaşımıdır. gRPC’de iletişim “remote procedure call” mantığıyla çalışır; yani istemci doğrudan sunucudaki bir metodu çağırır. REST’te ise iletişim resource (kaynak) odaklıdır ve HTTP metodları üzerinden veri yönetimi yapılır. Bu nedenle gRPC daha çok fonksiyon çağrısı gibi çalışırken, REST veri odaklı bir model sunar.
+
+Performans açısından gRPC genellikle REST’e göre daha hızlıdır. Bunun nedeni gRPC’nin HTTP/2 kullanması ve veri formatı olarak JSON yerine daha kompakt olan Protocol Buffers (protobuf) kullanmasıdır. REST ise çoğunlukla HTTP/1.1 ve JSON kullanır, bu da daha okunabilir ama daha ağır bir yapı oluşturur. Bu yüzden gRPC düşük gecikme ve yüksek performans gerektiren mikroservis sistemlerinde daha avantajlıdır.
+
+Kullanım açısından REST daha yaygın ve insan tarafından okunabilir olduğu için web API’lerinde sık tercih edilir. gRPC ise daha çok backend-to-backend (servisler arası) iletişimde kullanılır. Özetle REST daha basit ve geniş uyumluluk sunarken, gRPC daha hızlı ve verimli bir iletişim sağlar ancak öğrenme ve implementasyon açısından biraz daha karmaşıktır.
