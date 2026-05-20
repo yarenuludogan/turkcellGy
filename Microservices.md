@@ -122,4 +122,33 @@ Bu yapıda servisler arasındaki iletişim doğrudan uygulama tarafından yönet
 -Security (mTLS)
 -Retry / timeout / circuit breaking
 
-Bu sayede uygulama kodu sade kalır, iletişim altyapı tarafından yönetilir.
+Bu sayede uygulama kodu sade kalır, iletişim altyapı tarafından yönetilir. 
+
+### Service Discovery Server
+
+Discovery Server, mikroservis mimarisinde servislerin birbirini otomatik olarak bulmasını sağlayan merkezi bir kayıt sistemidir. Mikroservislerde servisler sürekli ölçeklenebilir, yeniden başlatılabilir veya farklı sunuculara taşınabilir. Bu nedenle servislerin IP adreslerini ve portlarını manuel takip etmek oldukça zor hale gelir. Discovery Server bu problemi çözmek için kullanılır.
+
+Bu yapıda her mikroservis çalışmaya başladığında kendi bilgilerini Discovery Server’a kaydeder. Bu bilgiler genellikle:
+
+*Servis adı
+*IP adresi
+*Port numarası
+*Durum bilgisi
+
+gibi verilerdir. Böylece merkezi bir servis kayıt sistemi oluşur.
+
+Örneğin bir sistemde:
+
+*User Service
+*Order Service
+*Payment Service
+
+olduğunu düşünelim. Order Service, User Service’e istek göndermek istediğinde User Service’in IP adresini bilmek zorunda değildir. Bunun yerine Discovery Server’a sorar:
+
+“USER-SERVICE şu anda nerede çalışıyor?”
+
+Discovery Server uygun instance bilgisini döndürür ve servisler birbirine bağlanır.
+
+Mikroservisler belirli aralıklarla Discovery Server’a heartbeat (yaşam sinyali) gönderir. Eğer bir servis kapanırsa veya cevap vermezse Discovery Server onu listeden çıkarır. Böylece sistem güncel servis bilgilerini tutmaya devam eder.
+
+Spring ekosisteminde bu amaçla en yaygın kullanılan yapı Spring Eureka’dır. Bunun dışında cloud-native ortamlarda Kubernetes kendi service discovery mekanizmasını sağlar. Ayrıca Consul ve Zookeeper gibi farklı discovery çözümleri de vardır.
