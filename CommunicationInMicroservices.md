@@ -1,8 +1,6 @@
 
 #### Saga, Outbox, Inbox, Retry, DLQ ve Load Balancing
 
-Bu dokümanın amacı sadece pattern tanımlarını vermek değildir. Bir yazılım geliştiricinin gerçek bir mikroservis projesinde bu patternleri neden kullandığını, hangi problemi çözdüğünü, kullanılmadığında hangi sorunların ortaya çıktığını ve patternlerin birbirleriyle nasıl çalıştığını anlatmaktır.
-
 #### Örnek Proje
 
 Doküman boyunca bir e-ticaret sistemi üzerinden ilerleyeceğiz.
